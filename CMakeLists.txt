@@ -9,7 +9,11 @@ set( SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
 
 SET( CMAKE_CXX_FLAGS  "-Wall -std=c++11" )
 
-add_subdirectory(tests)
+option(BUILD_TESTS "Build Unit Testing Binaries" OFF)
+
+if (BUILD_TESTS)
+  add_subdirectory(tests)
+endif()
 
 # add the executable
 add_executable(${PROJECT_NAME} ${SRC_DIR}/main.cpp ${SRC_DIR}/parsegtf.cpp ${SRC_DIR}/utility.cpp)
