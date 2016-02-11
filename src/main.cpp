@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "version.hpp"
 #include "parsegtf.hpp"
 #include "utility.hpp"
 #include "easyprint"
@@ -7,6 +8,7 @@
 void printUsage() {
     std::cerr
     << "Usage: gtf2tab OPTIONS INPUT_FILE" << std::endl
+    << "Version: v" << VERSION::MAJOR << "." << VERSION::MINOR << "." << VERSION::PATCH << std::endl
     << std::endl
     << "Options:" << std::endl
     << "    If no input file is specified, standard input is used" << std::endl
