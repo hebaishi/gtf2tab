@@ -1,8 +1,6 @@
 #define BOOST_TEST_MODULE parsegtf_function_tests
 #include <boost/test/unit_test.hpp>
 
-#include <easyprint>
-
 #include "parsegtf.hpp"
 
 BOOST_AUTO_TEST_CASE( parseGTF_tests )
@@ -25,6 +23,6 @@ BOOST_AUTO_TEST_CASE( parseGTF_tests )
 
 BOOST_AUTO_TEST_CASE( getGTFFields_tests )
 {
-    
+
 
 }

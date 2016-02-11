@@ -1,6 +1,5 @@
 #include "parsegtf.hpp"
 #include "utility.hpp"
-#include "easyprint"
 
 class badline: public std::exception
 {

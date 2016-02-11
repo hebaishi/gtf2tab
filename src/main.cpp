@@ -3,7 +3,6 @@
 #include "version.hpp"
 #include "parsegtf.hpp"
 #include "utility.hpp"
-#include "easyprint"
 
 void printUsage() {
     std::cerr
