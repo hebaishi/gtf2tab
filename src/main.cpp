@@ -41,10 +41,18 @@ int main(int argc, char const *argv[]) {
 
     std::unordered_map<std::string, std::string> option;
 
+    std::vector <std::string> commandline_args = [](int argc, const char* argv[]){
+        std::vector<std::string> vector_result;
+        for (int i = 0 ; i < argc ; i++) {
+            vector_result.push_back(argv[i]);
+        }
+        return vector_result;
+    } (argc, argv);
+
     std::string input_filename("-");
     option["-o"] = "-";
 
-    ParseArguments(argc, argv, option, input_filename);
+    ParseArguments(commandline_args, option, input_filename);
 
     if (option.find("-h") != option.end()) {
         printUsage();

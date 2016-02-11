@@ -1,18 +1,19 @@
 #include "utility.hpp"
 
-void ParseArguments(int argc, const char* argv[], string_map &option, std::string &input_filename){
+void ParseArguments(const std::vector <std::string>& commandline_args, string_map &option, std::string &input_filename){
     int option_index = 1;
-    while (option_index < argc) {
-        if (std::string(argv[option_index])[0] == '-') {
-            if ((option_index + 1) < argc) {
-                option[argv[option_index]] = argv[option_index + 1];
+    int size = commandline_args.size();
+    while (option_index < size) {
+        if (commandline_args[option_index][0] == '-') {
+            if ((option_index + 1) < size) {
+                option[commandline_args[option_index]] = commandline_args[option_index + 1];
                 option_index += 2;
             } else {
-                option[argv[option_index]] = "";
+                option[commandline_args[option_index]] = "";
                 option_index++;
             }
         } else {
-            input_filename.assign(argv[option_index]);
+            input_filename = commandline_args[option_index];
             option_index++;
         }
     }
@@ -67,18 +68,12 @@ std::string buildHeader(const std::vector<int>& field_list, const std::vector<st
     const std::vector <std::string> GTF_header = {"seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute"};
 
     std::string header_line("");
-    for (auto &element : field_list) {
-        header_line += GTF_header[element];
-        header_line += "\t";
-    }
 
-    for (auto &element : attribute_list) {
-        header_line += element;
-        header_line += "\t";
+    std::for_each( field_list.cbegin() , field_list.cend(), [&](const int& element){ header_line += GTF_header[element] + "\t"; } );
+    std::for_each(attribute_list.cbegin(), attribute_list.cend(), [&](const std::string& element){ header_line += element + "\t"; });
+    if (!header_line.empty()){
+            header_line.pop_back();
     }
-
-    if (!header_line.empty())
-        header_line.pop_back();
 
     return header_line;
 }

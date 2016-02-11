@@ -35,55 +35,38 @@ BOOST_AUTO_TEST_CASE( Tokenize_tests )
     BOOST_CHECK( tokenize_check("field1", "\t") ==  std::vector<std::string> {"field1"});
     BOOST_CHECK( tokenize_check("field1\t", "\t") ==  std::vector<std::string> {"field1"});
     BOOST_CHECK( tokenize_check("\tfield1", "\t") ==  std::vector<std::string> {"field1"});
-    BOOST_CHECK( tokenize_check("field1", "\t") ==  std::vector<std::string> {"field2"});
-    BOOST_CHECK( tokenize_check("field1", "\t") ==  std::vector<std::string> {"field2"});
+    BOOST_CHECK( tokenize_check("field1", "\t") ==  std::vector<std::string> {"field1"});
+    BOOST_CHECK( tokenize_check("field1", "\t") ==  std::vector<std::string> {"field1"});
 }
 
 BOOST_AUTO_TEST_CASE(ParseArguments_tests){
 
-    {
-        const char* argv [1] ={"./gtf2tab"};
-        string_map test_map;
-        std::string filename = "";
-        ParseArguments(1, argv, test_map, filename);
-        BOOST_CHECK( test_map == string_map({}) );
-        BOOST_CHECK( filename == "" );
-    }
+    auto parsearguments_test = [](const std::vector<std::string> &commandline_args, string_map &test_map , std::string& filename){
+        filename = "";
+        test_map = string_map({});
+        ParseArguments(commandline_args, test_map, filename);
+    };
 
-    {
-        const char* argv [2] ={"./gtf2tab", "file.txt" };
-        string_map test_map;
-        std::string filename = "";
-        ParseArguments(2, argv, test_map, filename);
-        BOOST_CHECK( test_map == string_map({}) );
-        BOOST_CHECK( filename == "file.txt" );
-    }
+    std::string filename;
+    string_map test_map;
 
-    {
-        const char* argv [3] ={"./gtf2tab", "-a", "gene_id" };
-        string_map test_map;
-        std::string filename = "";
-        ParseArguments(3, argv, test_map, filename);
-        BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"} }) );
-        BOOST_CHECK( filename == "" );
-    }
+    parsearguments_test({"./gtf2tab"}, test_map, filename);
+    BOOST_CHECK( test_map == string_map({}) );
+    BOOST_CHECK( filename == "" );
 
-    {
-        const char* argv [4] ={"./gtf2tab", "-a", "gene_id", "file2.txt" };
-        string_map test_map;
-        std::string filename = "";
-        ParseArguments(4, argv, test_map, filename);
-        BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"} }) );
-        BOOST_CHECK( filename == "file2.txt" );
-    }
+    parsearguments_test({"./gtf2tab", "file.txt" }, test_map, filename);
+    BOOST_CHECK( test_map == string_map({}) );
+    BOOST_CHECK( filename == "file.txt" );
 
-    {
-        const char* argv [6] ={"./gtf2tab", "-a", "gene_id", "-f", "1-9", "file3.txt"};
-        string_map test_map;
-        std::string filename = "";
-        ParseArguments(6, argv, test_map, filename);
-        BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"}, {"-f", "1-9"} }) );
-        BOOST_CHECK( filename == "file3.txt" );
-    }
+    parsearguments_test({"./gtf2tab", "-a", "gene_id" }, test_map, filename);
+    BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"} }) );
+    BOOST_CHECK( filename == "" );
 
+    parsearguments_test({"./gtf2tab", "-a", "gene_id", "file2.txt" }, test_map, filename);
+    BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"} }) );
+    BOOST_CHECK( filename == "file2.txt" );
+
+    parsearguments_test({"./gtf2tab", "-a", "gene_id", "-f", "1-9", "file3.txt"}, test_map, filename);
+    BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"}, {"-f", "1-9"} }) );
+    BOOST_CHECK( filename == "file3.txt" );
 }

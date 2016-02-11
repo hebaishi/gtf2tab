@@ -50,7 +50,7 @@ void openStream(STREAMTYPE &stream, std::string &filename){
     }
 }
 
-void ParseArguments(int, const char*[], string_map&, std::string&);
+void ParseArguments(const std::vector <std::string>&, string_map &, std::string &);
 void Tokenize(const std::string &, std::vector <std::string> &, const std::string &);
 std::vector<int> fieldListFromString(const std::string&);
 std::string buildHeader(const std::vector<int>&, const std::vector<std::string>&);
