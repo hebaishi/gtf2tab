@@ -10,3 +10,4 @@ target_link_libraries( parsegtf_test -lboost_unit_test_framework )
 
 enable_testing()
 add_test(ParseGTF_tests parsegtf_test)
+add_test(Utility_tests utility_test)

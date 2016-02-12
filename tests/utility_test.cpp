@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(ParseArguments_tests){
     BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"} }) );
     BOOST_CHECK( filename == "file2.txt" );
 
-    parsearguments_test({"./gtf2tab", "-a", "gene_id", "-f", "1-9", "file3.txt"}, test_map, filename);
+    parsearguments_test({"./gtf2tab", "-a", "gene_id", "-f", "1-9", "file3.txt", "file4.txt"}, test_map, filename);
     BOOST_CHECK( test_map == string_map({ {"-a", "gene_id"}, {"-f", "1-9"} }) );
-    BOOST_CHECK( filename == "file3.txt" );
+    BOOST_CHECK( filename == "file4.txt" );
 }
