@@ -1,6 +1,4 @@
 #!/bin/sh
-TRAVIS_OS_NAME="linux"
-
 BINS="gtf2tab"
 
 LINUX_COMMAND="tar cvzf"
