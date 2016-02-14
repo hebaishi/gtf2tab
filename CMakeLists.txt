@@ -7,7 +7,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 
 set( SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
 
-SET( CMAKE_CXX_FLAGS  "-Wall -std=c++11" )
+SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++11" )
 
 option(BUILD_TESTS "Build Unit Testing Binaries" OFF)
 

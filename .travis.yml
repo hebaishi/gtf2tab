@@ -14,9 +14,9 @@ addons:
     - gcc-4.8
     - g++-4.8
 script:
-- sh ./build.sh
+- mkdir bin && cd bin && cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
 before_deploy:
-  - if [ -f "./bin/gtf2tab" ]; then tar cvzf ./bin/gtf2tab_x86_64.tar.gz ./bin/gtf2tab; fi
+- ./create_archive.sh
 deploy:
   provider: releases
   api_key:
