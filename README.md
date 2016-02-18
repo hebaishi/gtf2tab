@@ -1,5 +1,5 @@
 # gtf2tab
-[![Build Status](https://travis-ci.org/hebaishi/gtf2tab.svg?branch=master)](https://travis-ci.org/hebaishi/gtf2tab)
+[![Travis](https://img.shields.io/travis/hebaishi/gtf2tab.svg?style=flat-square)]()
 
 Simple command-line application to convert GTF fields + attributes to a simple tab-delimited format.
 
