@@ -8,14 +8,14 @@ class badline: public std::exception
   }
 } badline;
 
-void readGTFFile(std::istream &input_stream, const std::ostream &output_stream,  const std::vector<int> &field_list, const std::vector<std::string> &attribute_list, const std::string& feature_type) {
+void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const std::vector<int> &field_list, const std::vector<std::string> &attribute_list, const std::string& feature_type) {
 
     std::string line;
     string_map att_map;
     while (getline(input_stream, line)) {
         if (line[0] != '#') {
             std::string output_line;
-            std::cout << getGTFFields(line, field_list, attribute_list, feature_type);
+            output_stream << getGTFFields(line, field_list, attribute_list, feature_type);
         }
     }
 }
