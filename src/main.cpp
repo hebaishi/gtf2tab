@@ -7,30 +7,30 @@
 void printUsage() {
     std::cerr
     << "Usage: gtf2tab OPTIONS INPUT_FILE" << std::endl
-    << "Version: v" << VERSION::MAJOR << "." << VERSION::MINOR << "." << VERSION::PATCH << std::endl
-    << std::endl
-    << "Options:" << std::endl
-    << "    If no input file is specified, standard input is used" << std::endl
-    << std::endl
-    << "    -a ATTRIBUTE_LIST    Comma-separated list of attributes. Examples" << std::endl
-    << "                         for an Ensembl GTF are gene_id and gene_biotype." << std::endl
-    << std::endl
-    << "    -f FIELDLIST         GTF fields to print, as a comma-separated list of" << std::endl
-    << "                         integers. Hyphens can also be used to specify a range" << std::endl
-    << "                         of values" << std::endl
-    << std::endl
-    << "    -t FEATURETYPE       Type of GTF feature to print." << std::endl
-    << std::endl
-    << "    -o OUTPUTFILE        Output filename. Default is standard output" << std::endl
-    << std::endl
-    << "    -h                   Display help" << std::endl
-    << std::endl
-    << "Example:" << std::endl
-    << "     To extract columns 1-4 and gene_id, gene_biotype" << std::endl
-    << "     from file.gtf the command would be:" << std::endl
-    << std::endl
-    << "     gtf2tab -f 1-4 -a gene_id,gene_biotype file.gtf" << std::endl
-    << std::endl;
+    << "Version: v" << VERSION::MAJOR << "." << VERSION::MINOR << "." << VERSION::PATCH << "\n" <<
+    "\n"
+    "Options:"
+    "    If no input file is specified, standard input is used\n"
+    "\n"
+    "    -a ATTRIBUTE_LIST    Comma-separated list of attributes. Examples\n"
+    "                         for an Ensembl GTF are gene_id and gene_biotype.\n"
+    "\n"
+    "    -f FIELDLIST         GTF fields to print, as a comma-separated list of\n"
+    "                         integers. Hyphens can also be used to specify a range\n"
+    "                         of values\n"
+    "\n"
+    "    -t FEATURETYPE       Type of GTF feature to print.\n"
+    "\n"
+    "    -o OUTPUTFILE        Output filename. Default is standard output\n"
+    "\n"
+    "    -h                   Display help\n"
+    "\n"
+    "Example:\n"
+    "     To extract columns 1-4 and gene_id, gene_biotype\n"
+    "     from file.gtf the command would be:\n"
+    "\n"
+    "     gtf2tab -f 1-4 -a gene_id,gene_biotype file.gtf\n"
+    "\n";
 }
 
 int main(int argc, char const *argv[]) {

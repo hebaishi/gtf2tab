@@ -8,15 +8,87 @@ class badline: public std::exception
   }
 } badline;
 
+using str_vec_iter = std::vector<std::string>::iterator;
+
+struct block_process {
+    std::vector <std::string> operator() (str_vec_iter begin, str_vec_iter end, const std::vector<int> &field_list, const std::vector<std::string>& attribute_list, const std::string& feature_type) {
+        std::vector <std::string> result_vector;
+        for (auto it = begin; it != end ; it++) {
+            result_vector.push_back(
+                getGTFFields(*it, field_list, attribute_list, feature_type)
+            );
+        }
+        return std::move(result_vector);
+    }
+};
+
+std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, const std::vector<int> &field_list, const std::vector<std::string>& attribute_list, const std::string& feature_type) {
+    size_t length = std::distance(begin, end);
+    size_t num_threads = std::max((unsigned int)2, std::thread::hardware_concurrency());
+    size_t block_size = length / num_threads;
+
+    str_vec_iter current_begin, current_end;
+    current_begin = begin;
+
+    std::vector< std::future<std::vector<std::string>>> handle_vector;
+
+    for (size_t i=0 ; i < (num_threads - 1) ; i++) {
+        current_end=current_begin;
+        std::advance(current_end, block_size);
+        handle_vector.push_back(
+            std::async(
+            std::launch::async, block_process(), current_begin, current_end, std::ref(field_list), std::ref(attribute_list), std::ref(feature_type)
+            )
+        );
+        current_begin = current_end;
+    }
+
+    handle_vector.push_back(
+        std::async(
+        std::launch::async, block_process(), current_begin, end, std::ref(field_list), std::ref(attribute_list), std::ref(feature_type)
+        )
+    );
+
+    std::vector<std::string> final_results;
+
+    std::for_each(handle_vector.begin(), handle_vector.end(), [&final_results](auto &element){
+        auto result = element.get();
+        std::move(result.begin(), result.end(), std::back_inserter(final_results));
+    });
+
+    return std::move(final_results);
+}
+
 void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const std::vector<int> &field_list, const std::vector<std::string> &attribute_list, const std::string& feature_type) {
 
+    const size_t buffer_size = 500'000;
     std::string line;
     string_map att_map;
+    std::vector <std::string> line_buffer, result_buffer;
+    size_t line_count = 0;
+
+    auto post_data = [&](){
+        result_buffer = parallel_parse(
+            line_buffer.begin(), line_buffer.end(), field_list, attribute_list, feature_type
+        );
+        std::for_each(result_buffer.begin(), result_buffer.end() , [&output_stream](auto &element){
+            output_stream << element;
+        });
+        line_buffer.clear();
+    };
+
     while (getline(input_stream, line)) {
+        line_count++;
         if (line[0] != '#') {
-            std::string output_line;
-            output_stream << getGTFFields(line, field_list, attribute_list, feature_type);
+            if (line_buffer.size()< buffer_size) {
+                line_buffer.push_back(std::move(line));
+            } else {
+                post_data();
+            }
         }
+    }
+    if (line_buffer.size() > 0) {
+        post_data();
     }
 }
 
@@ -51,7 +123,7 @@ std::string getGTFFields(const std::string &line, const std::vector<int> &field_
     return output;
 }
 
-string_map ParseGTFAttributes(const std::string line){
+string_map ParseGTFAttributes(const std::string &line){
     string_map att_map;
     int pos_name = 0;
     int size_name;

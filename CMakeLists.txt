@@ -7,7 +7,11 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 
 set( SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
 
-SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++11" )
+if (UNIX)
+  SET( CMAKE_CXX_COMPILER  "/usr/bin/g++-5" )
+  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++14 -O3" )
+  SET( CMAKE_EXE_LINKER_FLAGS  "-pthread" )
+endif()
 
 option(BUILD_TESTS "Build Unit Testing Binaries" OFF)
 
@@ -17,4 +21,8 @@ endif()
 
 # add the executable
 add_executable(${PROJECT_NAME} ${SRC_DIR}/main.cpp ${SRC_DIR}/parsegtf.cpp ${SRC_DIR}/utility.cpp)
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
