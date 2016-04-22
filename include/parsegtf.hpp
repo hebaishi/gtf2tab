@@ -10,10 +10,16 @@
 #include <algorithm>
 #include <future>
 
+struct GTFOptions {
+    std::vector<int> field_list;
+    std::vector<std::string> attribute_list;
+    std::string feature_type;
+};
+
 using string_map = std::unordered_map<std::string, std::string>;
 
-void readGTFFile(std::istream &input_stream,std::ostream&, const std::vector<int> &, const std::vector<std::string> &, const std::string&);
-std::string getGTFFields(const std::string &, const std::vector<int>&, const std::vector<std::string>&, const std::string&);
+void readGTFFile(std::istream &input_stream,std::ostream&, const GTFOptions &options);
+std::string getGTFFields(const std::string &, const GTFOptions& options);
 
 string_map ParseGTFAttributes(const std::string&);
 

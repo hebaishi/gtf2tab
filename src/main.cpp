@@ -40,7 +40,7 @@ int main(int argc, char const *argv[]) {
         exit(0);
     }
 
-    std::unordered_map<std::string, std::string> option;
+    std::unordered_map<std::string, std::string> cmd_options;
 
     std::vector <std::string> commandline_args = [](int argc, const char* argv[]){
         std::vector<std::string> vector_result;
@@ -51,24 +51,24 @@ int main(int argc, char const *argv[]) {
     } (argc, argv);
 
     std::string input_filename("-");
-    option["-o"] = "-";
+    cmd_options["-o"] = "-";
 
-    ParseArguments(commandline_args, option, input_filename);
+    ParseArguments(commandline_args, cmd_options, input_filename);
 
-    if (option.find("-h") != option.end()) {
+    if (cmd_options.find("-h") != cmd_options.end()) {
         printUsage();
         exit(0);
     }
 
-    if (option["-f"].empty() && option["-a"].empty()) {
+    if (cmd_options["-f"].empty() && cmd_options["-a"].empty()) {
         std::cerr << "Error! No fields or attributes specified" << std::endl;
         exit(-1);
     }
 
-    std::vector <int> field_list = fieldListFromString(option["-f"]);
-
-    std::vector<std::string> attribute_list;
-    Tokenize( option["-a"], attribute_list, "," );
+    GTFOptions options;
+    options.field_list = fieldListFromString(cmd_options["-f"]);
+    Tokenize( cmd_options["-a"], options.attribute_list, "," );
+    options.feature_type = cmd_options["-t"];
 
     std::ifstream input_file_stream;
     if (input_filename != "-") {
@@ -76,7 +76,7 @@ int main(int argc, char const *argv[]) {
     }
     std::istream& input_stream = (input_filename == "-") ? std::cin : input_file_stream;
 
-    std::string output_filename(option["-o"]);
+    std::string output_filename(cmd_options["-o"]);
     std::ofstream output_file_stream;
     if (output_filename != "-") {
         openStream(output_file_stream, output_filename);
@@ -84,8 +84,8 @@ int main(int argc, char const *argv[]) {
     std::ostream& output_stream = (output_filename == "-") ? std::cout : output_file_stream;
 
     if (input_stream && output_stream) {
-        output_stream << buildHeader(field_list, attribute_list) << std::endl;
-        readGTFFile(input_stream, output_stream, field_list, attribute_list, option["-t"]);
+        output_stream << buildHeader(options.field_list, options.attribute_list) << std::endl;
+        readGTFFile(input_stream, output_stream, options);
         return 0;
     } else {
         return -1;

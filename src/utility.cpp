@@ -69,7 +69,7 @@ std::string buildHeader(const std::vector<int>& field_list, const std::vector<st
 
     std::string header_line("");
 
-    std::for_each( field_list.cbegin() , field_list.cend(), [&](const int& element){ header_line += GTF_header[element] + "\t"; } );
+    std::for_each(field_list.cbegin() , field_list.cend(), [&](const int& element){ header_line += GTF_header[element] + "\t"; } );
     std::for_each(attribute_list.cbegin(), attribute_list.cend(), [&](const std::string& element){ header_line += element + "\t"; });
     if (!header_line.empty()){
             header_line.pop_back();

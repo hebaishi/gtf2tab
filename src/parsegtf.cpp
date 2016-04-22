@@ -11,19 +11,27 @@ class badline: public std::exception
 using str_vec_iter = std::vector<std::string>::iterator;
 
 struct block_process {
-    std::vector <std::string> operator() (str_vec_iter begin, str_vec_iter end, const std::vector<int> &field_list, const std::vector<std::string>& attribute_list, const std::string& feature_type) {
+    std::vector <std::string> operator() (str_vec_iter begin, str_vec_iter end, const GTFOptions &options) {
         std::vector <std::string> result_vector;
         for (auto it = begin; it != end ; it++) {
             result_vector.push_back(
-                getGTFFields(*it, field_list, attribute_list, feature_type)
+                getGTFFields(*it, options)
             );
         }
         return std::move(result_vector);
     }
 };
 
-std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, const std::vector<int> &field_list, const std::vector<std::string>& attribute_list, const std::string& feature_type) {
+std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, const GTFOptions & options) {
+
+    const size_t MIN_SIZE = 10000;
+
     size_t length = std::distance(begin, end);
+
+    if (length < MIN_SIZE) {
+        return block_process() (begin, end, std::ref(options));
+    }
+
     size_t num_threads = std::max((unsigned int)2, std::thread::hardware_concurrency());
     size_t block_size = length / num_threads;
 
@@ -37,7 +45,7 @@ std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, co
         std::advance(current_end, block_size);
         handle_vector.push_back(
             std::async(
-            std::launch::async, block_process(), current_begin, current_end, std::ref(field_list), std::ref(attribute_list), std::ref(feature_type)
+                std::launch::async, block_process(), current_begin, current_end, std::ref(options)
             )
         );
         current_begin = current_end;
@@ -45,7 +53,7 @@ std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, co
 
     handle_vector.push_back(
         std::async(
-        std::launch::async, block_process(), current_begin, end, std::ref(field_list), std::ref(attribute_list), std::ref(feature_type)
+            std::launch::async, block_process(), current_begin, current_end, std::ref(options)
         )
     );
 
@@ -59,7 +67,7 @@ std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, co
     return std::move(final_results);
 }
 
-void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const std::vector<int> &field_list, const std::vector<std::string> &attribute_list, const std::string& feature_type) {
+void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const GTFOptions& options) {
 
     const size_t buffer_size = 500'000;
     std::string line;
@@ -69,7 +77,7 @@ void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const
 
     auto post_data = [&](){
         result_buffer = parallel_parse(
-            line_buffer.begin(), line_buffer.end(), field_list, attribute_list, feature_type
+            line_buffer.begin(), line_buffer.end(), options
         );
         std::for_each(result_buffer.begin(), result_buffer.end() , [&output_stream](auto &element){
             output_stream << element;
@@ -92,7 +100,7 @@ void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const
     }
 }
 
-std::string getGTFFields(const std::string &line, const std::vector<int> &field_list, const std::vector<std::string>& attribute_list, const std::string& feature_type){
+std::string getGTFFields(const std::string &line, const GTFOptions& options){
 
     std::vector <std::string> tokens;
     Tokenize(line, tokens, "\t");
@@ -103,14 +111,14 @@ std::string getGTFFields(const std::string &line, const std::vector<int> &field_
 
     std::string output("");
 
-    if (feature_type.empty() || tokens[2] == feature_type) {
-        for (size_t index = 0 ; index < field_list.size() ; index++) {
-            output += tokens[field_list[index]];
+    if (options.feature_type.empty() || tokens[2] == options.feature_type) {
+        for (size_t index = 0 ; index < options.field_list.size() ; index++) {
+            output += tokens[options.field_list[index]];
             output += "\t";
         }
         string_map attribute = ParseGTFAttributes(tokens[8]);
 
-        for(auto &element : attribute_list){
+        for(auto &element : options.attribute_list){
             output += attribute[element];
             output += "\t";
         }
