@@ -5,7 +5,7 @@ before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -qq libboost-test-dev
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-4.8"; fi
 addons:
   apt:
     sources:
@@ -15,7 +15,7 @@ addons:
     - g++-4.8
     - g++-5
 script:
-- mkdir bin && cd bin && CXX=/usr/bin/g++-5 cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
+- mkdir bin && cd bin && cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
 before_deploy:
 - ./create_archive.sh
 deploy:
