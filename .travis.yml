@@ -13,8 +13,9 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
+    - g++-5
 script:
-- mkdir bin && cd bin && cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
+- mkdir bin && cd bin && CXX=/usr/bin/g++-5 cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
 before_deploy:
 - ./create_archive.sh
 deploy:
