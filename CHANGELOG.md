@@ -1,3 +1,6 @@
+## 0.1.4
+* Second attempt to fix deployment error
+
 ## 0.1.3
 * Fix deployment path error
 
