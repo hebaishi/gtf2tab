@@ -15,7 +15,7 @@ addons:
 script:
 - mkdir bin && cd bin && cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV
 before_deploy:
-- ./create_archive.sh
+  - if [ -f "./bin/gtf2tab" ]; then tar cvzf ./bin/gtf2tab_x86_64.tar.gz ./bin/gtf2tab; fi
 deploy:
   provider: releases
   api_key:
