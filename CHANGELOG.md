@@ -1,3 +1,6 @@
+## 0.1.3
+* Fix deployment path error
+
 ## 0.1.2
 * Use CMake for automatic deploy
 
