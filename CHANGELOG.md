@@ -1,3 +1,6 @@
+## 0.1.2
+* Use CMake for automatic deploy
+
 ## 0.1.1
 * Fix automatic deploy
 
