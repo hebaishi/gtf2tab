@@ -1,3 +1,6 @@
+## 0.1.0
+* Make multithreading default behavior
+
 ## 0.0.3
 * Use Travis CI for Automated build
 
