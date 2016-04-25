@@ -53,7 +53,7 @@ std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, co
 
     handle_vector.push_back(
         std::async(
-            std::launch::async, block_process(), current_begin, current_end, std::ref(options)
+            std::launch::async, block_process(), current_begin, end, std::ref(options)
         )
     );
 
