@@ -6,10 +6,13 @@ project (gtf2tab)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 set( SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
+set(CMAKE_BUILD_TYPE Release)
 
-if (UNIX)
-  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++14 -O3" )
+if ( ${CMAKE_C_COMPILER_ID} STREQUAL "GNU" OR  ${CMAKE_C_COMPILER_ID} STREQUAL "Clang" )
+  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++14" )
   SET( CMAKE_EXE_LINKER_FLAGS  "-pthread" )
+elseif(${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
+  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /O2 /MT" )
 endif()
 
 option(BUILD_TESTS "Build Unit Testing Binaries" OFF)
