@@ -1,3 +1,6 @@
+## 0.1.5
+* Fix multithreading bugs
+
 ## 0.1.4
 * Second attempt to fix deployment error
 
