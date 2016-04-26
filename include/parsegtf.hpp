@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <future>
+#include <iterator>
 
 struct GTFOptions {
     std::vector<int> field_list;
