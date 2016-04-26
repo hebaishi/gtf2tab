@@ -69,7 +69,7 @@ std::vector<std::string> parallel_parse(str_vec_iter begin, str_vec_iter end, co
 
 void readGTFFile(std::istream &input_stream, std::ostream &output_stream,  const GTFOptions& options) {
 
-    const size_t buffer_size = 262'144;
+    const size_t buffer_size = 524'288;
     std::string line;
     string_map att_map;
     std::vector <std::string> line_buffer, result_buffer;
