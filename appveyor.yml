@@ -8,6 +8,10 @@ clone_folder: c:\projects\gtf2tab
 platform: x64
 configuration: Release
 
+artifacts:
+  - path: gtf2tab\gtf2tab_win.zip
+    name: gtf2tab
+
 install:
 
 build:
@@ -27,6 +31,6 @@ deploy:
   description: 'Windows release'
   auth_token:
     secure: TkgB1ClpbVUS+9ijNYIAo2UmcULYOSeEkMbu4Ydo8nrmlmkNTq9+GqcBzAQnU+nC
-  artifact: c:\projects\gtf2tab\gtf2tab_win.zip
+  artifact: gtf2tab
   on:
     appveyor_repo_tag: true
