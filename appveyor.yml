@@ -26,7 +26,7 @@ deploy:
   provider: GitHub
   description: 'Windows release'
   auth_token:
-    secure: gWpJphuxYScfBynC8ZWS0bdRqqDzl7yrfokLdiVlC5/ktCt6SuJmemRPeNJJQVz8eIZVMiIf9SYzud2dUQtemYxo+bAlR5HdqGYpnJFlH7OhQejZbbiTx4qWedLyzacoZE4cTm5o3zcddHixyDFFznKLBt7POhEDk3BDb2Ta8rHsjgfp09dwIKw4SBXB9+QzS69lGLIdilDHLCA8V+4wTPqAqdOEWNI4NM9b/GEsxuGI2n0ZFCJzSjrBSRV5IduJDJ3kfChVVlpOMaIATaBvFrgRBi0AUfW6Se4BNvtSvbR2hpp+91oXqt1QdveF3dmkJk1W1zCskQuf4OS8OZoVvZ3ATNclTkGpqL08OhENaTO0vnlPA21YD/D8M8k9BsHxM82YN2uXnhehJEJ5e4gVikgxuvV73mIVass/gzAkwoqBAMVd5igsZLw53albUD5G6FmcIQSgjkLvyqKP2uQWJ+ZN+HI0n1CyMnrZWbe7Y6Tv36RtBPywqsJ3jOr67xx4yMPsavq/BY+B74qffYbh+lQ2gX56QhJO4bJelbrjioZDgbd6isWdycakmdRZQKk8esxlKx+3xp42/B4t1iGuwGndOFSUdtNz8/tNWWF9y2M9xBEJjFTumth54506+Zm2Jtq5Y/KwzwqjRraubLTzHQ+mNr2naBaUEr4axaGcRo8=
+    secure: TkgB1ClpbVUS+9ijNYIAo2UmcULYOSeEkMbu4Ydo8nrmlmkNTq9+GqcBzAQnU+nC
   artifact: c:\projects\gtf2tab\gtf2tab_win.zip
   on:
     appveyor_repo_tag: true
