@@ -1,0 +1,32 @@
+branches:
+  only:
+    - master
+
+os: Visual Studio 2015
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  - git config --global core.autocrlf input
+
+
+# clone directory
+clone_folder: c:\projects\gtf2tab
+
+platform: x64
+configuration: Release
+
+install:
+
+build:
+  project: INSTALL.vcxproj      # path to Visual Studio solution or project
+
+# scripts to run before build
+before_build:
+  - echo Running cmake...
+  - cd c:\projects\gtf2tab
+  - cmake -G "Visual Studio 14 2015 Win64"
+
+# scripts to run after build
+after_build:
+  - cd c:\projects\gtf2tab
+  - 7z a c:\projects\gtf2tab\gtf2tab_win.zip gtf2tab.exe -tzip
