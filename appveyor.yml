@@ -31,6 +31,6 @@ deploy:
   description: 'Windows release'
   auth_token:
     secure: TkgB1ClpbVUS+9ijNYIAo2UmcULYOSeEkMbu4Ydo8nrmlmkNTq9+GqcBzAQnU+nC
-  artifact: gtf2tab
+  artifact: gtf2tab\gtf2tab_win.zip
   on:
     appveyor_repo_tag: true
