@@ -29,4 +29,4 @@ before_build:
 # scripts to run after build
 after_build:
   - cd c:\projects\gtf2tab
-  - 7z a c:\projects\gtf2tab\gtf2tab_win.zip gtf2tab.exe -tzip
+  - 7z a gtf2tab_win.zip C:\projects\gtf2tab\Release\gtf2tab.exe -tzip
