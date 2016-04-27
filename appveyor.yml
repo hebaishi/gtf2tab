@@ -9,7 +9,7 @@ platform: x64
 configuration: Release
 
 artifacts:
-  - path: gtf2tab\gtf2tab_win.zip
+  - path: gtf2tab_win.zip
     name: gtf2tab_win.zip
 
 install:
@@ -31,7 +31,6 @@ deploy:
   description: 'Windows release'
   auth_token:
     secure: TkgB1ClpbVUS+9ijNYIAo2UmcULYOSeEkMbu4Ydo8nrmlmkNTq9+GqcBzAQnU+nC
-  artifact: gtf2tab_win.zip
   draft: false
   prerelease: false
   on:
