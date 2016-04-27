@@ -4,12 +4,9 @@ branches:
 
 os: Visual Studio 2015
 
-# scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf input
 
-
-# clone directory
 clone_folder: c:\projects\gtf2tab
 
 platform: x64
@@ -20,13 +17,20 @@ install:
 build:
   project: INSTALL.vcxproj      # path to Visual Studio solution or project
 
-# scripts to run before build
 before_build:
   - echo Running cmake...
   - cd c:\projects\gtf2tab
   - cmake -G "Visual Studio 14 2015 Win64"
 
-# scripts to run after build
 after_build:
   - cd c:\projects\gtf2tab
   - 7z a gtf2tab_win.zip C:\projects\gtf2tab\Release\gtf2tab.exe -tzip
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: gWpJphuxYScfBynC8ZWS0bdRqqDzl7yrfokLdiVlC5/ktCt6SuJmemRPeNJJQVz8eIZVMiIf9SYzud2dUQtemYxo+bAlR5HdqGYpnJFlH7OhQejZbbiTx4qWedLyzacoZE4cTm5o3zcddHixyDFFznKLBt7POhEDk3BDb2Ta8rHsjgfp09dwIKw4SBXB9+QzS69lGLIdilDHLCA8V+4wTPqAqdOEWNI4NM9b/GEsxuGI2n0ZFCJzSjrBSRV5IduJDJ3kfChVVlpOMaIATaBvFrgRBi0AUfW6Se4BNvtSvbR2hpp+91oXqt1QdveF3dmkJk1W1zCskQuf4OS8OZoVvZ3ATNclTkGpqL08OhENaTO0vnlPA21YD/D8M8k9BsHxM82YN2uXnhehJEJ5e4gVikgxuvV73mIVass/gzAkwoqBAMVd5igsZLw53albUD5G6FmcIQSgjkLvyqKP2uQWJ+ZN+HI0n1CyMnrZWbe7Y6Tv36RtBPywqsJ3jOr67xx4yMPsavq/BY+B74qffYbh+lQ2gX56QhJO4bJelbrjioZDgbd6isWdycakmdRZQKk8esxlKx+3xp42/B4t1iGuwGndOFSUdtNz8/tNWWF9y2M9xBEJjFTumth54506+Zm2Jtq5Y/KwzwqjRraubLTzHQ+mNr2naBaUEr4axaGcRo8=
+  artifact: c:\projects\gtf2tab\gtf2tab_win.zip
+  on:
+    branch: master
+    appveyor_repo_tag: true
