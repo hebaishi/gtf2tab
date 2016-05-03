@@ -1,10 +1,18 @@
 # gtf2tab
+[![Travis CI Shield](https://img.shields.io/travis/hebaishi/linter-gcc/master.svg?style=flat-square&label=Linux)](https://travis-ci.org/hebaishi/gtf2tab)
+[![Travis CI Shield](https://img.shields.io/travis/hebaishi/linter-gcc/master.svg?style=flat-square&label=OSX)](https://travis-ci.org/hebaishi/gtf2tab)
+[![AppVeyor CI](https://img.shields.io/appveyor/ci/hebaishi/gtf2tab/master.svg?style=flat-square&label=Windows)](https://ci.appveyor.com/project/hebaishi/gtf2tab)
+
 Simple command-line application to convert GTF fields + attributes to a simple tab-delimited format.
 
-| Platform  | Status |
-| ------------- | ------------- |
-| Linux + Mac OSX  | [![Travis CI Build Status](https://travis-ci.org/hebaishi/gtf2tab.svg?branch=master)](https://travis-ci.org/hebaishi/gtf2tab)  |
-| Windows  | [![Build status](https://ci.appveyor.com/api/projects/status/x8ky6n311ee4q23a?svg=true)](https://ci.appveyor.com/project/hebaishi/gtf2tab) |
+## Installation instructions
+The simplest method is to download the appropriate binary for your platform, and place it in the appropriate folder:
+
+Platform | Path
+------------ | -------------
+Linux | `/usr/bin`
+Mac OSX | `/usr/bin`
+Windows | `C:\Windows`
 
 ## Build Instructions
 
