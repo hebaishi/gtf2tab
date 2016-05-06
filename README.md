@@ -6,7 +6,7 @@
 Simple command-line application to convert GTF fields + attributes to a simple tab-delimited format.
 
 ## Installation instructions
-The simplest method is to download the appropriate binary for your platform, and place it in the appropriate folder:
+The simplest method is to download the appropriate binary for your platform. Download the appropriate binary from [here](https://github.com/hebaishi/gtf2tab/releases/latest) and place it in the appropriate folder:
 
 Platform | Path
 ------------ | -------------
@@ -14,8 +14,14 @@ Linux | `/usr/bin`
 Mac OSX | `/usr/bin`
 Windows | `C:\Windows`
 
+If you're using cygwin on Windows, simply place the binary in the bin folder of your cygwin installation.
+
+## **Important instructions for Windows users!!**
+To run gtf2tab, you need to download the Visual C++ Redistributable package for Visual Studio 2015. You can get that from Microsoft's website by following [this link](https://www.microsoft.com/en-gb/download/details.aspx?id=48145).
+
 ## Build Instructions
 
+Unless you really want to compile the program yourself, please ignore these instructions. It is much easier to simply download the pre-compiled binary by following the instructions above.
 You need to install the appropriate CMake version for your platform. To build:
 
 ### On Mac OSX / Linux:
