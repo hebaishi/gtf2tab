@@ -77,3 +77,11 @@ std::string buildHeader(const std::vector<int>& field_list, const std::vector<st
 
     return header_line;
 }
+
+void StringReplace(std::string& content, const std::string& search_for, const std::string& replace_with) {
+    size_t pos = 0;
+    while( (pos = content.find(search_for, pos)) != std::string::npos) {
+        content.replace(pos, search_for.length(), replace_with);
+        pos += replace_with.length();
+    }
+}

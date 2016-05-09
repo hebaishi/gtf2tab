@@ -54,5 +54,7 @@ void ParseArguments(const std::vector <std::string>&, string_map &, std::string 
 void Tokenize(const std::string &, std::vector <std::string> &, const std::string &);
 std::vector<int> fieldListFromString(const std::string&);
 std::string buildHeader(const std::vector<int>&, const std::vector<std::string>&);
+void StringReplace(std::string&, const std::string&, const std::string&);
+
 
 #endif /* end of include guard: UTILITY_H */

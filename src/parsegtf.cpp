@@ -117,8 +117,15 @@ std::string getGTFFields(const std::string &line, const GTFOptions& options){
         }
         string_map attribute = ParseGTFAttributes(tokens[8]);
 
+        std::string temp_attribute;
         for(auto &element : options.attribute_list){
-            output += attribute[element];
+            if (options.clean_attributes) {
+                temp_attribute = attribute[element];
+                StringReplace(temp_attribute, " ", "_");
+                output += temp_attribute;
+            } else {
+                output += attribute[element];
+            }
             output += "\t";
         }
         if (!output.empty()) {

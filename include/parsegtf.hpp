@@ -15,6 +15,7 @@ struct GTFOptions {
     std::vector<int> field_list;
     std::vector<std::string> attribute_list;
     std::string feature_type;
+    bool clean_attributes;
 };
 
 using string_map = std::unordered_map<std::string, std::string>;

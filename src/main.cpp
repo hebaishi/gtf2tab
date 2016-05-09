@@ -25,6 +25,8 @@ void printUsage() {
     "\n"
     "    -h                   Display help\n"
     "\n"
+    "    -C [0/1]             Remove spaces from attributes. Default value is 0\n"
+    "\n"
     "Example:\n"
     "     To extract columns 1-4 and gene_id, gene_biotype\n"
     "     from file.gtf the command would be:\n"
@@ -69,6 +71,11 @@ int main(int argc, char const *argv[]) {
     options.field_list = fieldListFromString(cmd_options["-f"]);
     Tokenize( cmd_options["-a"], options.attribute_list, "," );
     options.feature_type = cmd_options["-t"];
+    if (cmd_options["-C"] == "1") {
+        options.clean_attributes = true;
+    } else {
+        options.clean_attributes = false;
+    }
 
     std::ifstream input_file_stream;
     if (input_filename != "-") {
