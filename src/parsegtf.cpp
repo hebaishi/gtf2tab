@@ -119,13 +119,14 @@ std::string getGTFFields(const std::string &line, const GTFOptions& options){
 
         std::string temp_attribute;
         for(auto &element : options.attribute_list){
-            if (options.clean_attributes) {
-                temp_attribute = attribute[element];
-                StringReplace(temp_attribute, " ", "_");
-                output += temp_attribute;
-            } else {
-                output += attribute[element];
+            temp_attribute = attribute[element];
+            if (temp_attribute.empty()) {
+                temp_attribute = "NA";
             }
+            if (options.clean_attributes) {
+                StringReplace(temp_attribute, " ", "_");
+            }
+            output += temp_attribute;
             output += "\t";
         }
         if (!output.empty()) {
