@@ -1,32 +1,38 @@
 cmake_minimum_required (VERSION 2.6)
 project (gtf2tab)
 
-# add the binary tree to the search path for include files
-# so that we will find TutorialConfig.h
-include_directories("${PROJECT_SOURCE_DIR}/include")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set( SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
-set(CMAKE_BUILD_TYPE Release)
+set( INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include" )
 
-if ( ${CMAKE_C_COMPILER_ID} STREQUAL "GNU" OR  ${CMAKE_C_COMPILER_ID} STREQUAL "Clang" )
-  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -std=c++14" )
+include_directories("${INCLUDE_DIR}")
+
+if ( UNIX )
   SET( CMAKE_EXE_LINKER_FLAGS  "-pthread" )
-elseif(${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
-  SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /O2 /MT" )
 endif()
 
-option(BUILD_TESTS "Build Unit Testing Binaries" OFF)
+option(BUILD_TESTS "Build Unit Testing Binaries" ON)
 
 if (BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
+set(SOURCES
+  ${SRC_DIR}/main.cpp
+  ${SRC_DIR}/parsegtf.cpp
+  ${SRC_DIR}/utility.cpp
+)
+
+set(HEADERS
+  ${INCLUDE_DIR}/parsegtf.hpp
+  ${INCLUDE_DIR}/utility.hpp
+  ${INCLUDE_DIR}/version.hpp
+)
+
 # add the executable
-add_executable(${PROJECT_NAME} ${SRC_DIR}/main.cpp ${SRC_DIR}/parsegtf.cpp ${SRC_DIR}/utility.cpp)
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
-
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
 if (APPLE)
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND zip gtf2tab_osx.zip gtf2tab )
