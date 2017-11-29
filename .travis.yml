@@ -3,14 +3,17 @@ os:
   - linux
   - osx
 osx_image: xcode7.3
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sh ./ci_scripts/ubuntu_prebuild.sh; fi
 install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="g++-7" CC="gcc-7"; fi
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
+    - jonathonf/gcc-7.1
     packages:
-    - g++-5
+    - g++-7
     - libboost-test-dev
 script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then mkdir bin && cd bin && cmake -DBUILD_TESTS=ON .. && make && cd tests && ctest -VV; fi
