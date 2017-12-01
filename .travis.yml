@@ -4,7 +4,7 @@ os:
   - osx
 osx_image: xcode9.1
 before_install:
-  - sh ./ci_scripts/ubuntu_prebuild.sh
+  - sh ./ci_scripts/prebuild.sh
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="g++-7" CC="gcc-7"; fi
 addons:
