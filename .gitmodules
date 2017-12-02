@@ -1,4 +1,4 @@
 [submodule "boost-cmake"]
 	path = boost-cmake
-	url = git@github.com:hebaishi/boost-cmake.git
+	url = https://github.com/hebaishi/boost-cmake
 	branch = master
