@@ -4,6 +4,8 @@
 #include "parsegtf.hpp"
 #include "utility.hpp"
 
+#include <boost/program_options.hpp>
+
 void printUsage() {
     std::cerr
     << "Usage: gtf2tab OPTIONS INPUT_FILE" << std::endl
