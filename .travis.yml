@@ -14,10 +14,8 @@ addons:
     - jonathonf/gcc-7.1
     packages:
     - g++-7
-    - libboost-test-dev
 script:
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then mkdir bin && cd bin && ~/cmake/bin/cmake -DBUILD_TESTS=ON .. && make && cd tests && ~/cmake/bin/ctest -VV; fi
-- if [ "$TRAVIS_OS_NAME" = "osx" ]; then mkdir bin && cd bin && cmake .. && make; fi
+- mkdir bin && cd bin && ~/cmake/bin/cmake .. && make && cd tests && ~/cmake/bin/ctest -VV
 
 deploy:
   - provider: releases
